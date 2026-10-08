@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* Design tokens: "scattered polaroids on a sketchpad grid" (flim.ai-style reference).
+   Spacing and radius names are pixel-literal: p-20 = 20px, rounded-full = 160px pill. */
+@theme {
+  --color-ink: #141414;
+  --color-paper: #ffffff;
+  --color-canvas: #f5f5f5;
+  --color-mist: #e9e9e9;
+  --color-hairline: #d9d9d9;
+  --color-signal-green: #30a81d;
+  --color-forest: #21935b;
+  --color-highlight-yellow: #fecc33;
+  --color-ember: #ff8400;
+  --color-ember-ink: #c96500; /* ember deep enough for thin lines and small text on canvas */
+
+  --text-caption: 12px;
+  --text-body-sm: 15px;
+  --text-subheading: 21px;
+  --text-heading-sm: 27px;
+  --text-heading: 32px;
+  --text-heading-lg: 47px;
+  --text-display: 125px;
+
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-52: 52px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-100: 100px;
+  --spacing-180: 180px;
+
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-2xl: 16px;
+  --radius-3xl: 25px;
+  --radius-full: 160px;
+}
+
+/* Swizzy and PP Neue Montreal Mono are commercial: Schibsted Grotesk (500) and IBM Plex Mono stand in. */
+@theme inline {
+  --font-display: var(--font-schibsted), Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-sans: Arial, Helvetica, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The sketchpad: a 1px hairline grid at 40px, the surface of the whole page. */
+.grid-paper {
+  background-color: var(--color-canvas);
+  background-image:
+    linear-gradient(var(--color-hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-hairline) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* The micro-voice: small, uppercase, tracked like a diagram annotation. */
+.mono {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Marker-pen highlight behind a phrase. An inline-block pill: its box (not the font's taller content
+   area) is what gets painted, and its margins push neighbouring lines apart, so tight display leading
+   can't make the yellow run into the line above. The phrase moves to the next line whole, never split. */
+.marker {
+  display: inline-block;
+  background: var(--color-highlight-yellow);
+  border-radius: 0.24em;
+  padding: 0.02em 0.18em 0.06em;
+  margin: 0.06em 0;
+  line-height: 1.08;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal-green);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-highlight-yellow);
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  animation: marquee 40s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+  }
+}
