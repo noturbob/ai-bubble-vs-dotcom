@@ -147,6 +147,20 @@ def valuation_peak_2000() -> float:
     return con.execute("SELECT max(cape) FROM shiller WHERE date BETWEEN '1999-01-01' AND '2000-12-01'").fetchone()[0]
 
 
+def backtest() -> dict:
+    """The valuation clock run in the months before 1929, 2000 and 2021's tops (sql/18_backtest.sql)."""
+    rows = sql("18_backtest")
+    tops = []
+    for top in dict.fromkeys(r["top"] for r in rows):
+        own = [r for r in rows if r["top"] == top]
+        tops.append({"top": top, "previous_record": own[0]["previous_record"],
+                     "checks": [{"months_before": r["months_before_top"], "as_of": r["as_of"], "cape": r["cape"],
+                                 "predicted": r["predicted_top"], "error": r["error_months"]} for r in own if r["months_before_top"] in (12, 6, 3)]})
+    # Known history: in 1999 CAPE was already past the 1929 record, so the clock said "now" two years early.
+    assert all(c["error"] == -c["months_before"] for c in tops[1]["checks"]), tops[1]
+    return {"tops": tops}
+
+
 def soft_landing(story: dict) -> dict:
     """Four conditions for the boom to deflate instead of burst, each read from numbers already computed in SQL."""
     falls = {r["symbol"]: r for r in sql("17_falls")}
@@ -184,6 +198,7 @@ if __name__ == "__main__":
              "market_value": market_value(), "leverage": leverage_and_rates(), "gauge": gauge()}
     story["projection"] = projection(story["overlay"])
     story["soft_landing"] = soft_landing(story)
+    story["backtest"] = backtest()
     story["sql"] = {f.stem: f.read_text() for f in sorted(SQL.glob("*.sql"))}
     APP.parent.mkdir(parents=True, exist_ok=True)
     APP.write_text(json.dumps(story, indent=1, default=str))

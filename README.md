@@ -35,8 +35,8 @@ the top would come if nothing changes, and what could stop it.
 5. **But it isn't 2000 yet.** Interest rates are lower, the yield curve isn't inverted, and unlike most
    dot-coms the leaders make large, fast-growing profits.
 6. **If nothing changes: September 2027.** Four independent clocks, two at 1999's pace and two at today's,
-   put the top between May 2027 and October 2029. History is clear that valuation alone doesn't time a
-   crash, so the site treats this as a scenario, not a prophecy.
+   put the top between May 2027 and October 2029. A backtest on 1929, 2000 and 2021 shows the valuation
+   clock was early twice and late once, so the site treats the date as the middle of a wide range.
 7. **It could deflate instead.** If profits keep outrunning prices, the leaders would be back to normal
    valuations in one to four years without a crash, as happened in 2022–24. Two of the four conditions for
    that soft landing hold today.
@@ -161,6 +161,19 @@ Rebuild: `pipeline/run_all.sh`
    The median of the four is **September 2027**; the window is May 2027 to Oct 2029. This is arithmetic
    on trends, not a forecast: it assumes nothing changes, and item 7 shows valuation alone has never
    timed a crash.
+
+   **Backtest** (`sql/18_backtest.sql`): the valuation clock, run with only the data known at the time in
+   the 24 months before each great valuation top. Early twice, late once:
+
+   | Top | 12 months before, it said | 6 months before | 3 months before |
+   |---|---|---|---|
+   | Sep 1929 (record to beat: CAPE 25.2) | Dec 1928, 9 months early | "now", 6 early | "now", 3 early |
+   | Dec 1999 (record: 32.6) | "now", 12 early | "now", 6 early | "now", 3 early |
+   | Nov 2021 (record: 44.2) | Mar 2040 | Jun 2023, 19 late | Sep 2022, 10 late |
+
+   When a boom breaks the old record (1929, 1999) the clock fires early; when the top comes below it (2021)
+   the clock is late. Today CAPE is below the record, the 2021 pattern, so the top could come sooner than the
+   clocks say. The dot-com calendar and the 40 line can't be backtested: both are built from 2000 itself.
 10. **What could stop it** (`soft_landing()` in `analysis/indicators.py`): companies can't stop a bubble
     (Cisco, Intel and Oracle lost 81–86% after 2000 despite their analysts), but a boom can deflate
     instead of burst if four things hold. Two hold now:

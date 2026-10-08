@@ -3572,7 +3572,7 @@
   "series": [
    {
     "d": "2016-01",
-    "total": 1780118892958.908,
+    "total": 1780118892958.9082,
     "pct_gdp": 0.09466243704285726
    },
    {
@@ -3607,8 +3607,8 @@
    },
    {
     "d": "2017-10",
-    "total": 2900533153182.891,
-    "pct_gdp": 0.14789506770783117
+    "total": 2900533153182.8916,
+    "pct_gdp": 0.1478950677078312
    },
    {
     "d": "2018-01",
@@ -3632,7 +3632,7 @@
    },
    {
     "d": "2019-01",
-    "total": 3329172680566.5986,
+    "total": 3329172680566.598,
     "pct_gdp": 0.15455782091956244
    },
    {
@@ -3647,8 +3647,8 @@
    },
    {
     "d": "2019-10",
-    "total": 3853786401135.1016,
-    "pct_gdp": 0.17891316720390488
+    "total": 3853786401135.101,
+    "pct_gdp": 0.17891316720390485
    },
    {
     "d": "2020-01",
@@ -3677,7 +3677,7 @@
    },
    {
     "d": "2021-04",
-    "total": 7005152530174.18,
+    "total": 7005152530174.179,
     "pct_gdp": 0.29525656858535054
    },
    {
@@ -3687,18 +3687,18 @@
    },
    {
     "d": "2021-10",
-    "total": 8283799055755.921,
-    "pct_gdp": 0.34914958289883885
+    "total": 8283799055755.92,
+    "pct_gdp": 0.3491495828988388
    },
    {
     "d": "2022-01",
-    "total": 7642270377769.471,
-    "pct_gdp": 0.2933173516893964
+    "total": 7642270377769.47,
+    "pct_gdp": 0.2933173516893963
    },
    {
     "d": "2022-04",
-    "total": 6312778540295.41,
-    "pct_gdp": 0.2422902346699671
+    "total": 6312778540295.411,
+    "pct_gdp": 0.24229023466996713
    },
    {
     "d": "2022-07",
@@ -3752,8 +3752,8 @@
    },
    {
     "d": "2025-01",
-    "total": 14364295232856.75,
-    "pct_gdp": 0.4668324758725873
+    "total": 14364295232856.752,
+    "pct_gdp": 0.46683247587258736
    },
    {
     "d": "2025-04",
@@ -3762,8 +3762,8 @@
    },
    {
     "d": "2025-07",
-    "total": 17317603979537.965,
-    "pct_gdp": 0.5628135464284009
+    "total": 17317603979537.963,
+    "pct_gdp": 0.5628135464284008
    },
    {
     "d": "2025-10",
@@ -9487,6 +9487,91 @@
    }
   ]
  },
+ "backtest": {
+  "tops": [
+   {
+    "top": "1929-09",
+    "previous_record": 25.2,
+    "checks": [
+     {
+      "months_before": 12,
+      "as_of": "1928-09",
+      "cape": 23.0,
+      "predicted": "1928-12",
+      "error": -9
+     },
+     {
+      "months_before": 6,
+      "as_of": "1929-03",
+      "cape": 27.7,
+      "predicted": "1929-03",
+      "error": -6
+     },
+     {
+      "months_before": 3,
+      "as_of": "1929-06",
+      "cape": 27.9,
+      "predicted": "1929-06",
+      "error": -3
+     }
+    ]
+   },
+   {
+    "top": "1999-12",
+    "previous_record": 32.6,
+    "checks": [
+     {
+      "months_before": 12,
+      "as_of": "1998-12",
+      "cape": 38.8,
+      "predicted": "1998-12",
+      "error": -12
+     },
+     {
+      "months_before": 6,
+      "as_of": "1999-06",
+      "cape": 42.2,
+      "predicted": "1999-06",
+      "error": -6
+     },
+     {
+      "months_before": 3,
+      "as_of": "1999-09",
+      "cape": 41.3,
+      "predicted": "1999-09",
+      "error": -3
+     }
+    ]
+   },
+   {
+    "top": "2021-11",
+    "previous_record": 44.2,
+    "checks": [
+     {
+      "months_before": 12,
+      "as_of": "2020-11",
+      "cape": 32.5,
+      "predicted": "2040-03",
+      "error": 220
+     },
+     {
+      "months_before": 6,
+      "as_of": "2021-05",
+      "cape": 36.6,
+      "predicted": "2023-06",
+      "error": 19
+     },
+     {
+      "months_before": 3,
+      "as_of": "2021-08",
+      "cape": 38.0,
+      "predicted": "2022-09",
+      "error": 10
+     }
+    ]
+   }
+  ]
+ },
  "sql": {
   "00_sources": "-- The tables every query reads, straight from the CSVs the pipeline wrote, plus two small helpers.\n-- Run by analysis/indicators.py from the project root.\n\nCREATE OR REPLACE VIEW shiller    AS SELECT * FROM read_csv('data/processed/shiller_monthly.csv', header = true);   -- S&P since 1871\nCREATE OR REPLACE VIEW prices     AS SELECT * FROM read_csv('data/processed/prices_monthly.csv', header = true);    -- Yahoo, monthly\nCREATE OR REPLACE VIEW financials AS SELECT * FROM read_csv('data/processed/financials.csv', header = true);        -- SEC filings\nCREATE OR REPLACE VIEW shares     AS SELECT * FROM read_csv('data/processed/shares_quarterly.csv', header = true);  -- SEC share counts\nCREATE OR REPLACE VIEW rates      AS SELECT * FROM read_csv('data/processed/rates_monthly.csv', header = true);     -- Fed H.15\nCREATE OR REPLACE VIEW margin     AS SELECT * FROM read_csv('data/processed/margin_monthly.csv', header = true);    -- FINRA\nCREATE OR REPLACE VIEW gdp        AS SELECT * FROM read_csv('data/processed/gdp_annual.csv', header = true);        -- World Bank\n\n-- US GDP for a date's year; years after the latest published one use the latest.\nCREATE OR REPLACE MACRO gdp_at(d) AS\n    (SELECT gdp_usd FROM gdp WHERE year = least(year(d), (SELECT max(year) FROM gdp)));\n\n-- Wilson score interval for k successes in n trials (95%): honest bounds for small samples.\nCREATE OR REPLACE MACRO wilson_lo(k, n) AS\n    greatest(0, ((k / n + 1.96 ^ 2 / (2 * n)) - 1.96 * sqrt(k / n * (1 - k / n) / n + 1.96 ^ 2 / (4 * n * n))) / (1 + 1.96 ^ 2 / n));\nCREATE OR REPLACE MACRO wilson_hi(k, n) AS\n    least(1, ((k / n + 1.96 ^ 2 / (2 * n)) + 1.96 * sqrt(k / n * (1 - k / n) / n + 1.96 ^ 2 / (4 * n * n))) / (1 + 1.96 ^ 2 / n));\n",
   "01_valuation": "-- How expensive is the S&P 500? CAPE (price over ten years of inflation-adjusted earnings) today,\n-- against every month since 1881, and against the peaks of 1929, 2000 and 2021.\nWITH cape AS (\n    SELECT date, cape FROM shiller WHERE cape IS NOT NULL\n), now AS (\n    SELECT arg_max(cape, date) AS cape, max(date) AS date FROM cape\n)\nSELECT strftime(now.date, '%Y-%m')                                            AS as_of,\n       now.cape                                                               AS cape,\n       avg(CASE WHEN c.cape < now.cape THEN 1 ELSE 0 END)                     AS percentile,   -- share of months cheaper than today\n       median(c.cape)                                                         AS median,\n       count(*) FILTER (WHERE c.cape > now.cape)                              AS months_higher,\n       count(*)                                                               AS months,\n       list(DISTINCT year(c.date) ORDER BY year(c.date)) FILTER (WHERE c.cape > now.cape) AS higher_periods,\n       max(c.cape) FILTER (WHERE c.date BETWEEN '1929-01-01' AND '1929-12-01') AS peak_1929,\n       max(c.cape) FILTER (WHERE c.date BETWEEN '1999-01-01' AND '2000-12-01') AS peak_2000,\n       max(c.cape) FILTER (WHERE c.date BETWEEN '2021-01-01' AND '2021-12-01') AS peak_2021\nFROM cape c, now\nGROUP BY now.date, now.cape;\n",
@@ -9505,6 +9590,7 @@
   "14_bubble_gauge": "-- The bubble gauge: four readings, each ranked against its own history, then averaged.\n--   valuation  CAPE\n--   speed      the Nasdaq's real gain over the last 3 years\n--   leverage   margin debt as a share of GDP\n--   trend      how far the real Nasdaq sits above its 10-year average\n-- A rank of 0.9 means higher than 90% of months. Ranks use the whole sample, so the gauge says\n-- where a month sits in history; on its own it is not a forecast.\nCREATE OR REPLACE TABLE gauge AS\nWITH cpi AS (SELECT date, cpi FROM shiller WHERE cpi IS NOT NULL),\nnas AS (\n    SELECT p.date, p.close / c.cpi AS real, row_number() OVER (ORDER BY p.date) AS i\n    FROM prices p ASOF JOIN cpi c ON p.date >= c.date\n    WHERE p.symbol = '^IXIC'\n),\nnas_measures AS (\n    SELECT date,\n           real / lag(real, 36) OVER (ORDER BY date) - 1                                          AS speed,\n           CASE WHEN i >= 120 THEN real / avg(real) OVER (ORDER BY date ROWS 119 PRECEDING) - 1 END AS trend\n    FROM nas\n),\nreadings AS (\n    SELECT s.date, s.cape, n.speed, l.pct_gdp AS leverage, n.trend\n    FROM shiller s JOIN nas_measures n USING (date) JOIN leverage l USING (date)\n    WHERE s.cape IS NOT NULL AND n.speed IS NOT NULL AND n.trend IS NOT NULL\n),\nranked AS (    -- percentile rank, ties sharing their average rank\n    SELECT date,\n           (rank() OVER (ORDER BY cape)     + (count(*) OVER (PARTITION BY cape) - 1) / 2)     / count(*) OVER () AS cape,\n           (rank() OVER (ORDER BY speed)    + (count(*) OVER (PARTITION BY speed) - 1) / 2)    / count(*) OVER () AS speed,\n           (rank() OVER (ORDER BY leverage) + (count(*) OVER (PARTITION BY leverage) - 1) / 2) / count(*) OVER () AS leverage,\n           (rank() OVER (ORDER BY trend)    + (count(*) OVER (PARTITION BY trend) - 1) / 2)    / count(*) OVER () AS trend\n    FROM readings\n)\nSELECT *, (cape + speed + leverage + trend) / 4 AS gauge FROM ranked ORDER BY date;\n\nCOPY (SELECT strftime(date, '%Y-%m-%d') AS date, cape, speed, leverage, trend, gauge FROM gauge) TO 'data/analysis/bubble_gauge.csv' (HEADER);\n\nSELECT strftime(date, '%Y-%m') AS d, gauge AS g FROM gauge ORDER BY date;\n",
   "15_projection": "-- If nothing changes, when does the boom top out? Four clocks; each is a scenario, not a forecast.\n--   1999's pace: the dot-com calendar (the Nasdaq topped in month 54 after Netscape's IPO), and\n--                the 40 line (months from CAPE first passing 40 to the Nasdaq's top).\n--   today's pace: CAPE and the Nasdaq extended on a straight-line fit of their last 24 months (in\n--                logs, so a steady growth rate) until they reach their dot-com highs. Fits over 12\n--                and 36 months give each a range.\nCREATE OR REPLACE TABLE projection_clocks AS\nWITH today AS (SELECT max(date) AS d FROM shiller WHERE cape IS NOT NULL),\ntop AS (SELECT month, strptime(d, '%Y-%m')::DATE AS date FROM (SELECT * FROM boom_overlay WHERE era = 'dotcom') b\n        JOIN (SELECT arg_max(m, nasdaq) AS month FROM boom_overlay WHERE era = 'dotcom') p ON b.m = p.month),\ncrossed AS (\n    SELECT min(date) FILTER (WHERE date < '2002-01-01') AS then_, min(date) FILTER (WHERE date > '2002-01-01') AS now_\n    FROM shiller WHERE cape >= 40\n),\nseries AS (           -- newest point has back = 1\n    SELECT 'cape' AS id, cape AS v, row_number() OVER (ORDER BY date DESC) AS back FROM shiller WHERE cape IS NOT NULL\n    UNION ALL\n    SELECT 'nasdaq', nasdaq, row_number() OVER (ORDER BY m DESC) FROM boom_overlay WHERE era = 'ai'\n),\ntargets(id, target) AS (\n    SELECT 'cape', max(cape) FROM shiller WHERE date BETWEEN '1999-01-01' AND '2000-12-01'\n    UNION ALL\n    SELECT 'nasdaq', nasdaq FROM boom_overlay WHERE era = 'dotcom' AND m = (SELECT month FROM top)\n),\nfits AS (\n    SELECT s.id, w.w,\n           regr_slope(ln(s.v), w.w - s.back)     AS slope,       -- x runs 0 .. w-1, oldest to newest\n           regr_intercept(ln(s.v), w.w - s.back) AS intercept\n    FROM series s, (VALUES (12), (24), (36)) w(w)\n    WHERE s.back <= w.w\n    GROUP BY s.id, w.w\n),\nmonths_to AS (\n    SELECT f.id, f.w, f.slope,\n           CASE WHEN f.intercept + f.slope * (f.w - 1) >= ln(t.target) THEN 0\n                WHEN f.slope > 0 THEN (ln(t.target) - (f.intercept + f.slope * (f.w - 1))) / f.slope END AS months\n    FROM fits f JOIN targets t USING (id)\n),\npace AS (\n    SELECT id,\n           (SELECT d FROM today) + to_months(round_even(max(months) FILTER (WHERE w = 24), 0)::INT) AS date,\n           (SELECT d FROM today) + to_months(round_even(min(months), 0)::INT)                       AS range_lo,\n           (SELECT d FROM today) + to_months(round_even(max(months), 0)::INT)                       AS range_hi,\n           exp(max(slope) FILTER (WHERE w = 24) * 12) - 1                                          AS rate\n    FROM months_to GROUP BY id\n)\nSELECT 'calendar' AS id, '1999' AS pace, (DATE '2022-11-01' + to_months((SELECT month FROM top)))::DATE AS date,\n       NULL::DATE AS range_lo, NULL::DATE AS range_hi, NULL::DOUBLE AS rate\nUNION ALL\nSELECT 'cape40', '1999', (c.now_ + to_months(date_diff('month', c.then_, t.date)))::DATE, NULL, NULL, NULL\nFROM crossed c, top t\nUNION ALL\nSELECT id, 'today', date::DATE, range_lo::DATE, range_hi::DATE, rate FROM pace WHERE id = 'cape'\nUNION ALL\nSELECT id, 'today', date::DATE, range_lo::DATE, range_hi::DATE, rate FROM pace WHERE id = 'nasdaq';\n\n-- The middle of the four (halfway between the second and third, by month) and the full window.\nWITH ranked AS (\n    SELECT date, year(date) * 12 + month(date) - 1 AS mi, row_number() OVER (ORDER BY date) AS r FROM projection_clocks\n), mid AS (\n    SELECT round_even(avg(mi) FILTER (WHERE r IN (2, 3)), 0)::INT AS mi, min(date) AS lo, max(date) AS hi FROM ranked\n)\nSELECT make_date(mi // 12, mi % 12 + 1, 1) AS central, lo, hi,\n       date_diff('month', (SELECT max(date) FROM shiller WHERE cape IS NOT NULL), make_date(mi // 12, mi % 12 + 1, 1)) AS months_ahead,\n       (SELECT min(date) FROM shiller WHERE cape >= 40 AND date < '2002-01-01') AS crossed_then,\n       (SELECT min(date) FROM shiller WHERE cape >= 40 AND date > '2002-01-01') AS crossed_now\nFROM mid;\n",
   "16_soft_landing": "-- What would let the boom deflate instead of burst?\n-- The catch-up maths: if prices go nowhere, how many years of profit growth bring the leaders'\n-- combined P/E down to the S&P 500's median since 1990? Growth is their combined net income,\n-- 2023 to 2025, as a yearly rate; it is also shown at half that pace and at 10% a year.\nWITH priced AS (                         -- leaders with a current P/E (see 09_market_value.sql)\n    SELECT symbol, mcap, pe FROM leader_now WHERE pe IS NOT NULL\n), pe_now AS (\n    SELECT sum(mcap) / sum(mcap / pe) AS pe FROM priced\n), growth AS (\n    SELECT (sum(net_income) FILTER (WHERE year = 2025) / sum(net_income) FILTER (WHERE year = 2023)) ^ 0.5 - 1 AS g\n    FROM financials WHERE symbol IN (SELECT symbol FROM priced)\n), norm AS (\n    SELECT median(price / earnings) AS pe FROM shiller WHERE date >= '1990-01-01' AND earnings IS NOT NULL AND price IS NOT NULL\n)\nSELECT p.pe AS pe_now, n.pe AS target, g.g AS growth,\n       ln(p.pe / n.pe) / ln(1 + g.g)     AS years_today,\n       ln(p.pe / n.pe) / ln(1 + g.g / 2) AS years_half,\n       ln(p.pe / n.pe) / ln(1.10)        AS years_slow,\n       (SELECT list(symbol ORDER BY list_position(['NVDA', 'MSFT', 'GOOGL', 'AMZN', 'META', 'AVGO', 'ORCL'], symbol)) FROM priced) AS symbols\nFROM pe_now p, norm n, growth g;\n",
-  "17_falls": "-- How far the dot-com leaders fell, and the Nasdaq in 2022: from each one's peak in a window, the\n-- lowest price in the three years after it. And when the Nasdaq got back to its 2021 high.\nWITH windows(symbol, a, b) AS (\n    VALUES ('CSCO', DATE '1999-01-01', DATE '2000-12-01'), ('INTC', DATE '1999-01-01', DATE '2000-12-01'),\n           ('ORCL', DATE '1999-01-01', DATE '2000-12-01'), ('MSFT', DATE '1999-01-01', DATE '2000-12-01'),\n           ('^IXIC', DATE '2021-01-01', DATE '2021-12-01')\n), peaks AS (\n    SELECT w.symbol, arg_max(p.date, p.adjclose) AS peak, max(p.adjclose) AS high\n    FROM windows w JOIN prices p ON p.symbol = w.symbol AND p.date BETWEEN w.a AND w.b\n    GROUP BY w.symbol\n)\nSELECT k.symbol, strftime(k.peak, '%Y-%m') AS peak,\n       (SELECT min(adjclose) FROM prices p WHERE p.symbol = k.symbol AND p.date BETWEEN k.peak AND k.peak + INTERVAL 3 YEAR) / k.high - 1 AS fall,\n       CASE WHEN k.symbol = '^IXIC' THEN\n           (SELECT strftime(min(p.date), '%Y-%m') FROM prices p WHERE p.symbol = '^IXIC' AND p.date > k.peak\n              AND p.close >= (SELECT close FROM prices WHERE symbol = '^IXIC' AND date = k.peak)) END AS back\nFROM peaks k\nORDER BY list_position(['CSCO', 'INTC', 'ORCL', 'MSFT', '^IXIC'], k.symbol);\n"
+  "17_falls": "-- How far the dot-com leaders fell, and the Nasdaq in 2022: from each one's peak in a window, the\n-- lowest price in the three years after it. And when the Nasdaq got back to its 2021 high.\nWITH windows(symbol, a, b) AS (\n    VALUES ('CSCO', DATE '1999-01-01', DATE '2000-12-01'), ('INTC', DATE '1999-01-01', DATE '2000-12-01'),\n           ('ORCL', DATE '1999-01-01', DATE '2000-12-01'), ('MSFT', DATE '1999-01-01', DATE '2000-12-01'),\n           ('^IXIC', DATE '2021-01-01', DATE '2021-12-01')\n), peaks AS (\n    SELECT w.symbol, arg_max(p.date, p.adjclose) AS peak, max(p.adjclose) AS high\n    FROM windows w JOIN prices p ON p.symbol = w.symbol AND p.date BETWEEN w.a AND w.b\n    GROUP BY w.symbol\n)\nSELECT k.symbol, strftime(k.peak, '%Y-%m') AS peak,\n       (SELECT min(adjclose) FROM prices p WHERE p.symbol = k.symbol AND p.date BETWEEN k.peak AND k.peak + INTERVAL 3 YEAR) / k.high - 1 AS fall,\n       CASE WHEN k.symbol = '^IXIC' THEN\n           (SELECT strftime(min(p.date), '%Y-%m') FROM prices p WHERE p.symbol = '^IXIC' AND p.date > k.peak\n              AND p.close >= (SELECT close FROM prices WHERE symbol = '^IXIC' AND date = k.peak)) END AS back\nFROM peaks k\nORDER BY list_position(['CSCO', 'INTC', 'ORCL', 'MSFT', '^IXIC'], k.symbol);\n",
+  "18_backtest": "-- Would the valuation clock have worked before? For the three great valuation tops (CAPE's peak\n-- in 1929, 1999 and 2021), stand in each of the 24 months before the top, using only data known by\n-- then, and run the same clock: extend CAPE's last-24-month trend until it reaches the previous\n-- record (the highest CAPE from more than five years before that top). Compare its answer with\n-- when the top actually came.\n-- The dot-com calendar and the 40 line can't be tested this way: both are built from 2000 itself.\nCREATE OR REPLACE TABLE backtest AS\nWITH cape AS (\n    SELECT date, cape, row_number() OVER (ORDER BY date) AS i FROM shiller WHERE cape IS NOT NULL\n), fit AS (            -- the 24-month log-linear trend as it looked in each month\n    SELECT date, cape, i,\n           regr_slope(ln(cape), i)     OVER (ORDER BY date ROWS 23 PRECEDING) AS slope,\n           regr_intercept(ln(cape), i) OVER (ORDER BY date ROWS 23 PRECEDING) AS intercept\n    FROM cape\n), tops(top) AS (\n    SELECT (SELECT arg_max(date, cape) FROM cape WHERE date BETWEEN a AND b)\n    FROM (VALUES (DATE '1929-01-01', DATE '1929-12-01'), (DATE '1999-01-01', DATE '2000-12-01'), (DATE '2021-01-01', DATE '2021-12-01')) w(a, b)\n), targets AS (\n    SELECT top, (SELECT max(cape) FROM cape WHERE date < top - INTERVAL 5 YEAR) AS previous_record FROM tops\n)\nSELECT t.top, t.previous_record, f.date AS as_of, f.cape,\n       date_diff('month', f.date, t.top)                                                AS months_before_top,\n       CASE WHEN f.cape >= t.previous_record THEN 0\n            WHEN f.slope > 0 THEN round_even((ln(t.previous_record) - (f.intercept + f.slope * f.i)) / f.slope, 0) END AS months_to_target,\n       CASE WHEN f.cape >= t.previous_record THEN f.date\n            WHEN f.slope > 0 THEN (f.date + to_months(round_even((ln(t.previous_record) - (f.intercept + f.slope * f.i)) / f.slope, 0)::INT))::DATE\n       END                                                                              AS predicted_top\nFROM targets t JOIN fit f ON f.date BETWEEN t.top - INTERVAL 24 MONTH AND t.top\nORDER BY t.top, f.date;\n\nSELECT strftime(top, '%Y-%m') AS top, round(previous_record, 1) AS previous_record, strftime(as_of, '%Y-%m') AS as_of, months_before_top,\n       round(cape, 1) AS cape, strftime(predicted_top, '%Y-%m') AS predicted_top, date_diff('month', top, predicted_top) AS error_months\nFROM backtest WHERE months_before_top IN (24, 18, 12, 6, 3, 0) ORDER BY top, as_of;\n"
  }
 }

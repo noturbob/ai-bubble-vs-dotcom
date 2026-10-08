@@ -16,9 +16,17 @@ import { SqlPanel } from "@/components/SqlPanel";
 import { MiniBars, MiniLine } from "@/components/Mini";
 import { EMBER, EMBER_LINE, INK, pct, usd } from "@/components/format";
 
-const v = story.valuation, o = story.odds, ov = story.overlay, sp = story.spending, mv = story.market_value, lv = story.leverage, g = story.gauge, pj = story.projection, sl = story.soft_landing;
+const v = story.valuation, o = story.odds, ov = story.overlay, sp = story.spending, mv = story.market_value, lv = story.leverage, g = story.gauge, pj = story.projection, sl = story.soft_landing, bt = story.backtest;
 const NAMES: Record<string, string> = { NVDA: "Nvidia", MSFT: "Microsoft", GOOGL: "Alphabet", AMZN: "Amazon", META: "Meta", AVGO: "Broadcom", ORCL: "Oracle" };
 const month = (d: string) => new Date(`${d}-01T00:00:00Z`).toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" });
+
+// How far a backtest answer missed the real top: "9 months early", "on time", "18 years late".
+const missBy = (e: number | null) => {
+  if (e === null) return "never reached it";
+  if (e === 0) return "on time";
+  const n = Math.abs(e), unit = n >= 24 ? `${Math.round(n / 12)} years` : `${n} month${n === 1 ? "" : "s"}`;
+  return `${unit} ${e < 0 ? "early" : "late"}`;
+};
 
 function Chapter({ id, kicker, title, intro, children }: { id: string; kicker: string; title: ReactNode; intro?: ReactNode; children: ReactNode }) {
   return (
@@ -224,6 +232,48 @@ export default function Home() {
               and chapter 07 shows valuation alone has never timed a crash.
             </p>
             <SqlPanel files={["15_projection"]} className="mt-40" />
+
+            <div className="mt-100">
+              <p className="mono text-[12px]">Would it have worked?</p>
+              <h3 className="display mt-12 max-w-[900px] text-[36px] leading-[1] sm:text-[47px]">We ran the valuation clock before three real tops.</h3>
+              <p className="mt-24 max-w-[680px] text-[18px] leading-[1.5] text-[#2a2a2a]">
+                Standing in the months before each great valuation peak, with only the data known then, the clock extends CAPE&apos;s two-year
+                trend until it beats the previous record. The other three clocks can&apos;t be tested this way: two are built from 2000 itself.
+              </p>
+              <Window title="What the clock said vs when the top came" className="mt-40">
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[560px] text-left text-[15px]">
+                    <thead>
+                      <tr className="mono text-[11px] text-[#6b6b6b]">
+                        <th className="pb-12 font-normal">Actual top</th>
+                        {bt.tops[0].checks.map((c) => <th key={c.months_before} className="pb-12 font-normal">{c.months_before} months before, it said</th>)}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {bt.tops.map((t) => (
+                        <tr key={t.top} className="border-t border-hairline align-top">
+                          <td className="py-16 pr-16"><p className="display text-[24px] leading-none">{month(t.top)}</p>
+                            <p className="mono mt-8 text-[11px] text-[#6b6b6b]">record to beat: CAPE {t.previous_record}</p></td>
+                          {t.checks.map((c) => (
+                            <td key={c.months_before} className="py-16 pr-16">
+                              <p className="num text-[17px]">{c.predicted === null ? "Never" : c.predicted === c.as_of ? "“Now”" : month(c.predicted)}</p>
+                              <p className="mt-4 text-[13px] text-[#6b6b6b]">{missBy(c.error)}</p>
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Window>
+              <p className="mt-40 max-w-[760px] text-[21px] leading-[1.45]">
+                <strong>Early twice, late once.</strong> When valuations broke the old record, in 1929 and 1999, the clock said &ldquo;now&rdquo;
+                months or even two years before the top. In 2021 the top came below the 2000 record, so in the half-year before the peak the clock
+                still pointed 8 to 19 months ahead. Today CAPE is also below the record, like 2021, so the top could come sooner than the clocks say.
+                Read {month(pj.central)} as the middle of a wide range, not a date.
+              </p>
+              <SqlPanel files={["18_backtest"]} className="mt-40" />
+            </div>
           </div>
         </section>
 
