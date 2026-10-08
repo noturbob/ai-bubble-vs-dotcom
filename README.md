@@ -1,18 +1,94 @@
-# Is AI a bubble?
+<div align="center">
 
-**Question:** how does today's AI boom compare with the dot-com bubble on the same yardsticks, and what does
-150 years of market history say about what tends to follow valuations this high?
+# AI Bubble?
 
-No one can date a crash, and this project doesn't try. It measures where we are against history and says
-what usually came next, with the uncertainty attached.
+**The biggest boom since 1999, measured against it, number by number.**
 
-**Status:** data, analysis and story app done. Run the app: `cd app && pnpm install && pnpm dev`.
+Today's AI boom set against the dot-com bubble on the same yardsticks,<br>
+and 150 years of market history on what tends to come next.
 
-## What's in this folder
+### [**Read the story →**](https://ai-bubble-vs-dotcom.vercel.app)
+
+<a href="https://ai-bubble-vs-dotcom.vercel.app"><img src="docs/preview/hero.jpg" alt="AI Bubble? The opening screen, with data snapshots scattered on a grid" width="100%"></a>
+
+</div>
+
+---
+
+Everyone has an opinion on whether AI is a bubble. This project replaces the opinion with measurements. It
+puts today's market next to the dot-com boom on the yardsticks that defined 1999: how expensive stocks are,
+how fast prices have run, how much is being spent ahead of revenue, how concentrated the market is, and how
+much of it is bought with borrowed money. Then it asks what 150 years of history say usually follows, when
+the top would come if nothing changes, and what could stop it.
+
+## What it found
+
+1. **Expensive, almost 1999 expensive.** The S&P 500's cyclically adjusted P/E (CAPE) is **40.7**, higher
+   than in 98.9% of months since 1881. Only 1999–2000 was higher.
+2. **Same script, so far.** 47 months after ChatGPT the Nasdaq is up **2.4×**. 47 months after Netscape's
+   IPO, in July 1999, it was up 2.6×. The dot-com peak came seven months later, followed by a 75% fall.
+3. **Spending like it's already paid off.** Microsoft, Alphabet, Amazon, Meta and Oracle spent **$413bn** on
+   data centres in 2025: 25% of their revenue, and more than their combined profits for the first time
+   since at least 2015.
+4. **Seven companies, 68% of US GDP**, worth $20.9tn together. Margin debt, money borrowed to buy shares, is
+   a record 4.7% of GDP (2000 peaked at 2.9%).
+5. **But it isn't 2000 yet.** Interest rates are lower, the yield curve isn't inverted, and unlike most
+   dot-coms the leaders make large, fast-growing profits.
+6. **If nothing changes: September 2027.** Four independent clocks, two at 1999's pace and two at today's,
+   put the top between May 2027 and October 2029. History is clear that valuation alone doesn't time a
+   crash, so the site treats this as a scenario, not a prophecy.
+7. **It could deflate instead.** If profits keep outrunning prices, the leaders would be back to normal
+   valuations in one to four years without a crash, as happened in 2022–24. Two of the four conditions for
+   that soft landing hold today.
+
+## A look inside
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/preview/same-script.jpg" alt="Chapter opener: the Nasdaq is up 2.4 times since ChatGPT"><br><sub><b>Same script, so far.</b> A pinned chart then draws the dot-com and AI runs month by month, up to "you are here".</sub></td>
+    <td width="50%"><img src="docs/preview/leaders.jpg" alt="The seven AI leaders as physics pills sized by market value"><br><sub><b>The leaders.</b> Seven companies fall into a box as pills sized by market value. Grab one and throw it.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/preview/projection.jpg" alt="Timeline of the four projection clocks"><br><sub><b>The projection.</b> Four clocks for when the boom tops out, with the range each one moves across.</sub></td>
+    <td width="50%"><img src="docs/preview/verdict.jpg" alt="The verdict: probably a bubble, best guess September 2027"><br><sub><b>The verdict.</b> Probably a bubble. What it looks like, what's different, and what history says.</sub></td>
+  </tr>
+</table>
+
+## How it works
+
+```mermaid
+flowchart LR
+  A["Shiller · Yahoo Finance · SEC EDGAR<br>Federal Reserve · FINRA · World Bank"] --> B["pipeline/<br>download · checksum · extract<br>+ checks against known values"]
+  B --> C["data/processed/<br>tidy monthly & annual tables"]
+  C --> D["analysis/indicators.py<br>valuation · crash odds · overlay<br>gauge · projection · soft landing"]
+  D --> E["app/data/story.json"]
+  E --> F["Story app<br>Next.js + GSAP"]
+```
+
+- **Six public sources, all kept raw.** Every downloaded file sits unedited in `data/raw/` with its URL and
+  checksum, so the analysis can be rerun on exactly the data the site shows.
+- **The pipeline checks itself against history.** It stops unless it reproduces known values: CAPE in 1929
+  and 1999, the Nasdaq in 2000, Nvidia's 2024 revenue, Cisco's 86% fall after 2000, and more.
+- **Honest statistics.** Crash odds are counted by independent episodes, not overlapping months, with
+  Wilson confidence intervals, which is why they are wide. The projection shows how far each date moves when
+  its trend is fitted over one, two or three years.
+
+**Built with:** Python, pandas and uv for the pipeline; Next.js, TypeScript, Tailwind CSS, GSAP, Lenis and
+Matter.js for the story.
+
+## Run it yourself
+
+```bash
+uv sync && pipeline/run_all.sh          # downloads, extracts and runs the analysis
+cd app && pnpm install && pnpm dev
+```
+
+## Project structure
 
 ```
 03-ai-bubble/
 ├── README.md
+├── docs/preview/               screenshots used in this README
 ├── pyproject.toml              Python deps (pandas, xlrd, openpyxl); run everything with `uv run`
 ├── pipeline/
 │   ├── sources.py              every external file: URL and what it is used for
@@ -41,7 +117,7 @@ Rebuild: `pipeline/run_all.sh`
 | `finra/margin-statistics.xlsx` | FINRA margin debt, monthly since 1997 | Borrowed money in the market |
 | `worldbank/us_gdp.json` | US GDP, annual | Scaling market values and margin debt |
 
-## Findings (October 2026)
+## Detailed findings (data to October 2026)
 
 1. **Valuation:** the S&P 500's CAPE is **40.7**, higher than in 98.9% of months since 1881. Only 1999–2000
    (peak 44.2) was higher; 1929 peaked at 32.6.
