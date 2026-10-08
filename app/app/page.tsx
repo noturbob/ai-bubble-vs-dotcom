@@ -296,7 +296,12 @@ export default function Home() {
       </main>
 
       <footer aria-label="AI Bubble?" className="overflow-hidden px-16 pb-100 pt-40 sm:px-24">
-        <p className="mono text-[12px]">© {v.as_of.slice(0, 4)} · Data to {month(v.as_of)} · A data story</p>
+        <div className="mono flex flex-wrap items-center gap-x-24 gap-y-8 text-[12px]">
+          <p>Made by Bobby Anthene · Data to {month(v.as_of)}</p>
+          <a className="underline underline-offset-4" href="https://github.com/noturbob" target="_blank" rel="noreferrer">GitHub</a>
+          <a className="underline underline-offset-4" href="mailto:bobbyanthene@gmail.com">bobbyanthene@gmail.com</a>
+          <a className="underline underline-offset-4" href="https://github.com/noturbob/ai-bubble-vs-dotcom" target="_blank" rel="noreferrer">Source code and data</a>
+        </div>
         <p className="display mt-24 whitespace-nowrap text-center text-[22vw] leading-[0.8]" aria-hidden>Bubble?</p>
       </footer>
       <GaugePill now={g.now.gauge} peak={g.max.g} peakDate={month(g.max.d)} />
