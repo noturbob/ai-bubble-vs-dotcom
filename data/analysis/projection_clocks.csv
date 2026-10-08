@@ -1,5 +1,5 @@
 id,pace,name,how,date,rate,range
 calendar,1999,The dot-com calendar,The dot-com run topped in month 54 after Netscape's IPO. Month 54 after ChatGPT.,2027-05,,
 cape40,1999,The 40 line,CAPE first passed 40 in Jan 1999; the Nasdaq topped 13 months later. This time it passed 40 in May 2026.,2027-06,,
-cape,today,Valuation at today's pace,CAPE has risen 7% a year over the last two years. At that pace it reaches its 2000 peak of 44.2.,2027-12,0.07137851871646506,"['2027-08', '2028-05']"
-nasdaq,today,Prices at today's pace,The Nasdaq has risen 25% a year over the last two years. At that pace it reaches the dot-com top: ×4.6 from the start.,2029-10,0.24605292502757492,"['2029-10', '2029-12']"
+cape,today,Valuation at today's pace,CAPE has risen 7% a year over the last two years. At that pace it reaches its 2000 peak of 44.2.,2027-12,0.07137851871646572,"['2027-08', '2028-05']"
+nasdaq,today,Prices at today's pace,The Nasdaq has risen 25% a year over the last two years. At that pace it reaches the dot-com top: ×4.6 from the start.,2029-10,0.24605292502757425,"['2029-10', '2029-12']"

@@ -60,8 +60,8 @@ the top would come if nothing changes, and what could stop it.
 flowchart LR
   A["Shiller · Yahoo Finance · SEC EDGAR<br>Federal Reserve · FINRA · World Bank"] --> B["pipeline/<br>download · checksum · extract<br>+ checks against known values"]
   B --> C["data/processed/<br>tidy monthly & annual tables"]
-  C --> D["analysis/indicators.py<br>valuation · crash odds · overlay<br>gauge · projection · soft landing"]
-  D --> E["app/data/story.json"]
+  C --> D["sql/*.sql in DuckDB<br>valuation · crash odds · overlay<br>gauge · projection · soft landing"]
+  D --> E["analysis/indicators.py<br>→ app/data/story.json"]
   E --> F["Story app<br>Next.js + GSAP"]
 ```
 
@@ -69,12 +69,17 @@ flowchart LR
   checksum, so the analysis can be rerun on exactly the data the site shows.
 - **The pipeline checks itself against history.** It stops unless it reproduces known values: CAPE in 1929
   and 1999, the Nasdaq in 2000, Nvidia's 2024 revenue, Cisco's 86% fall after 2000, and more.
+- **Every number is computed in SQL.** Seventeen DuckDB queries in `sql/`, one question each: window
+  functions for the 36-month drawdowns and 10-year returns, ASOF joins to match prices to share counts and
+  CPI, percentile ranks for the gauge, and `regr_slope` for the projection's trend lines. Each chart on the
+  site has a **"Show the SQL"** panel with the exact query behind it. Python only runs the files, shapes the
+  JSON and writes the sentences.
 - **Honest statistics.** Crash odds are counted by independent episodes, not overlapping months, with
   Wilson confidence intervals, which is why they are wide. The projection shows how far each date moves when
   its trend is fitted over one, two or three years.
 
-**Built with:** Python, pandas and uv for the pipeline; Next.js, TypeScript, Tailwind CSS, GSAP, Lenis and
-Matter.js for the story.
+**Built with:** SQL (DuckDB) for the analysis; Python, pandas and uv for downloading and extraction;
+Next.js, TypeScript, Tailwind CSS, GSAP, Lenis and Matter.js for the story.
 
 ## Run it yourself
 
@@ -95,8 +100,14 @@ cd app && pnpm install && pnpm dev
 │   ├── 01_download.py          fetches sources into data/raw/, writes MANIFEST.csv
 │   ├── 02_extract.py           raw files → tidy tables, with checks against known values
 │   └── run_all.sh              rebuilds everything end to end
+├── sql/                        every measure, one question per file (00_sources.sql sets up the tables)
+│   ├── 01–05                   valuation, crash odds by month and by valuation band, high-CAPE episodes
+│   ├── 06–07                   the boom-vs-boom overlay and the dot-com peak
+│   ├── 08–11                   the build-out, market values (ASOF join), the chart series
+│   ├── 12–14                   leverage, interest rates, the bubble gauge
+│   └── 15–17                   the projection clocks, the soft-landing maths, peak-to-trough falls
 ├── analysis/
-│   └── indicators.py           all measures and findings → data/analysis/*.csv, app/data/story.json
+│   └── indicators.py           runs sql/ in order, checks the results → app/data/story.json
 ├── app/                        the story app (Next.js); reads only app/data/story.json
 └── data/
     ├── raw/                    original files, never edited (MANIFEST.csv has URLs and checksums)

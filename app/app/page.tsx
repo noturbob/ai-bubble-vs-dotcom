@@ -12,6 +12,7 @@ import { Pills } from "@/components/Pills";
 import { Columns } from "@/components/Columns";
 import { GaugePill } from "@/components/GaugePill";
 import { Clocks } from "@/components/Clocks";
+import { SqlPanel } from "@/components/SqlPanel";
 import { MiniBars, MiniLine } from "@/components/Mini";
 import { EMBER, EMBER_LINE, INK, pct, usd } from "@/components/format";
 
@@ -104,6 +105,7 @@ export default function Home() {
               ]} />
             <p className="mt-12 text-[13px] text-[#6b6b6b]">Median since 1881: {v.median.toFixed(1)}. Source: Robert Shiller, shillerdata.com.</p>
           </Window>
+          <SqlPanel files={["01_valuation", "02_valuation_series"]} className="mt-40" />
         </Chapter>
 
         <Opener id="script-open" tone="green" kicker="02 · The script" title="Same script, so far."
@@ -116,6 +118,7 @@ export default function Home() {
             up ×{(same.leaders / 100).toFixed(1)} at the same point. A rhyme is not a forecast. The dot-com run had seven months and{" "}
             {Math.round((peak.nasdaq / same.nasdaq - 1) * 100)}% left in it from here, and nothing guarantees this one follows.
           </p>
+          <SqlPanel files={["06_boom_overlay", "07_dotcom_peak"]} className="mx-auto mt-40 max-w-[1200px]" />
         </section>
 
         <Chapter id="buildout" kicker="03 · The build-out" title={<>Spending like it&apos;s <span className="marker">already paid off.</span></>}
@@ -127,12 +130,14 @@ export default function Home() {
               rows={sp.rows.map((r) => ({ label: String(r.year), value: r.capex, display: usd(r.capex), hi: r.year >= 2024, sub: pct(r.intensity) }))} />
             <p className="mt-16 text-[13px] text-[#6b6b6b]">Bars: capital spending. Below each year: as a share of the five companies&apos; revenue.</p>
           </Window>
+          <SqlPanel files={["08_buildout", "11_buildout_by_company"]} className="mt-40" />
         </Chapter>
 
         <Chapter id="leaders" kicker="04 · The leaders" title={<>Seven companies, <span className="marker">{pct(mv.pct_gdp)} of GDP.</span></>}
           intro={<>Together the AI leaders are worth {usd(mv.total)}. Unlike most dot-coms they make real profits, but the prices assume those
             profits keep compounding: Nvidia trades at {Math.round(nv.pe!)}× its earnings and {Math.round(nv.ps)}× its sales.</>}>
           <Pills pills={pills} label={`AI leaders by market value: ${mv.companies.map((c) => `${NAMES[c.symbol]} ${usd(c.mcap)}`).join(", ")}`} />
+          <SqlPanel files={["09_market_value", "10_market_value_series"]} className="mt-40" />
         </Chapter>
 
         <Chapter id="leverage" kicker="05 · Leverage" title={<>More borrowed money than <span className="marker">ever.</span></>}
@@ -146,6 +151,7 @@ export default function Home() {
                 { i: lv.margin.length - 1, s: 0, label: `Now ${pct(lv.margin_now.pct_gdp, 1)}` },
               ]} />
           </Window>
+          <SqlPanel files={["12_leverage", "13_rates"]} className="mt-40" />
         </Chapter>
 
         <Opener id="different" tone="ember" kicker="06 · What's different" title="Not 2000 yet."
@@ -172,6 +178,7 @@ export default function Home() {
               <p className="mt-16 text-[13px] text-[#6b6b6b]">Share of months followed by a 30% fall; below, episodes that saw one. Monthly averages smooth short crashes like March 2020.</p>
             </Window>
           </div>
+          <SqlPanel files={["03_crash_odds_by_month", "04_crash_odds_by_band", "05_high_cape_episodes"]} className="mt-40" />
         </Chapter>
 
         <Chapter id="gauge" kicker="08 · The gauge" title={<>One number: <span className="marker">{g.now.gauge.toFixed(2)}.</span></>}
@@ -185,6 +192,7 @@ export default function Home() {
                 { i: g.series.length - 1, s: 0, label: `Now: ${g.now.gauge.toFixed(2)}`, below: true },
               ]} />
           </Window>
+          <SqlPanel files={["14_bubble_gauge"]} className="mt-40" />
         </Chapter>
 
         <Opener id="forecast" tone="green" kicker="09 · The projection" title={`${month(pj.central)}.`}
@@ -215,6 +223,7 @@ export default function Home() {
               This is arithmetic on trends, not a forecast. Rate hikes or a profit miss would bring the date forward; profits that keep catching up with prices would push it out,
               and chapter 07 shows valuation alone has never timed a crash.
             </p>
+            <SqlPanel files={["15_projection"]} className="mt-40" />
           </div>
         </section>
 
@@ -263,6 +272,7 @@ export default function Home() {
               A deflation, not a burst. If all four hold, the clocks in chapter 09 point to a stall rather than a 2000-style collapse.
             </p>
           </div>
+          <SqlPanel files={["16_soft_landing", "17_falls"]} className="mt-40" />
         </Chapter>
 
         <section id="verdict" aria-label="Verdict" className="px-16 py-180 sm:px-24">
@@ -289,7 +299,7 @@ export default function Home() {
         <section id="method" aria-label="Method and sources" className="border-t border-hairline bg-canvas px-16 py-80 sm:px-24">
           <div className="mx-auto grid max-w-[1200px] gap-40 text-[14px] leading-[1.6] text-[#2a2a2a] md:grid-cols-3">
             <div><p className="mono text-[12px] text-ink">Sources</p><p className="mt-12">Robert Shiller&apos;s market data (shillerdata.com), Yahoo Finance monthly prices, SEC EDGAR company filings, Federal Reserve H.15 Treasury yields, FINRA margin statistics, World Bank GDP. Every file is listed with its URL and checksum in the project repository.</p></div>
-            <div><p className="mono text-[12px] text-ink">Checks</p><p className="mt-12">The pipeline fails unless it reproduces known values: CAPE in 1929 and 1999, Nvidia&apos;s 2024 revenue, the Nasdaq in 2000, and market values for Nvidia and Alphabet. Share counts are adjusted for stock splits from the date they were filed.</p></div>
+            <div><p className="mono text-[12px] text-ink">Checks</p><p className="mt-12">The pipeline fails unless it reproduces known values: CAPE in 1929 and 1999, Nvidia&apos;s 2024 revenue, the Nasdaq in 2000, and market values for Nvidia and Alphabet. Share counts are adjusted for stock splits from the date they were filed. Every number is then computed in SQL (DuckDB), one question per file; open &ldquo;Show the SQL&rdquo; under any chart to read it.</p></div>
             <div><p className="mono text-[12px] text-ink">Limits</p><p className="mt-12">History is a small sample: only three periods have had CAPE above 30. Monthly averages smooth short crashes. The gauge ranks months against the whole period, so it describes, it does not forecast. The projection extends recent trends in straight lines; real booms speed up and stall.</p></div>
           </div>
         </section>
