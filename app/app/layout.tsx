@@ -7,6 +7,8 @@ const schibsted = Schibsted_Grotesk({ subsets: ["latin"], weight: ["500"], varia
 const plexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400"], variable: "--font-plex-mono" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ai-bubble-vs-dotcom.vercel.app"),
+  twitter: { card: "summary_large_image" },
   title: "AI Bubble?",
   description: "Today's AI boom measured against the dot-com bubble, and what 150 years of market history says usually comes next.",
 };
